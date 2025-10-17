@@ -3,6 +3,9 @@ BRANCH
 Creación de Branch:
 git checkout -b nombreBranch
 
+Sin crear branch:
+git checkout nombreBranch
+
 Guardar cambios desde Branch:
 git add .
 git commit -m "(lo que hiciste)"

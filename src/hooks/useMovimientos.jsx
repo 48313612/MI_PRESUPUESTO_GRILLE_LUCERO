@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useLocalStorage } from './useLocalStorage'
 
 const STORAGE_KEY = 'movimientos'
 const MOCK_MOVIMIENTOS = [
@@ -29,17 +29,7 @@ const MOCK_MOVIMIENTOS = [
 ]
 
 export function useMovimientos() {
-  const [movimientos, setMovimientos] = useState(() => {
-    const data = localStorage.getItem(STORAGE_KEY)
-    if (data) return JSON.parse(data)
-    // Si no hay datos, inicializa con mockeados
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(MOCK_MOVIMIENTOS))
-    return MOCK_MOVIMIENTOS
-  })
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(movimientos))
-  }, [movimientos])
+  const [movimientos, setMovimientos] = useLocalStorage(STORAGE_KEY, MOCK_MOVIMIENTOS)
 
   const addMovimiento = (mov) => setMovimientos([...movimientos, mov])
   const editMovimiento = (id, updated) =>
@@ -48,6 +38,22 @@ export function useMovimientos() {
     setMovimientos(movimientos.filter(m => m.id !== id))
   const resetMovimientos = () => setMovimientos([])
 
+  
+  const filterByText = (text) =>
+    movimientos.filter(m => m.descripcion.toLowerCase().includes(text.toLowerCase()))
+
+  const filterByCategoria = (categoria) =>
+    movimientos.filter(m => m.categoria === categoria)
+
+  const filterByTipo = (tipo) =>
+    movimientos.filter(m => m.tipo === tipo)
+
+  const sortByFecha = () =>
+    [...movimientos].sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+
+  const sortByMonto = () =>
+    [...movimientos].sort((a, b) => b.monto - a.monto)
+
   return {
     movimientos,
     addMovimiento,
@@ -55,5 +61,10 @@ export function useMovimientos() {
     deleteMovimiento,
     resetMovimientos,
     setMovimientos,
+    filterByText,
+    filterByCategoria,
+    filterByTipo,
+    sortByFecha,
+    sortByMonto,
   }
 }
