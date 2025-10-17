@@ -1,0 +1,24 @@
+BRANCH
+
+Creación de Branch:
+git checkout -b nombreBranch
+
+Sin crear branch:
+git checkout nombreBranch
+
+Guardar cambios desde Branch:
+git add .
+git commit -m "(lo que hiciste)"
+git push -u origin nombreBranch
+
+Una vez guardado tus cambios a Tu Branch:
+git checkout main
+git pull origin main
+git merge nombreBranch
+git push origin main
+
+Actualizar codigo cuando tengo el proyecto cloneado:
+git checkout main
+git pull origin main
+git checkout nombreBranch
+git merge main
