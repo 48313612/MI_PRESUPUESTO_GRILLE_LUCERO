@@ -1,22 +1,6 @@
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { useMovimientosContext } from "../contexts/MovimientosContext";
-
-const categorias = ["alimentacion", "transporte", "entretenimiento", "salud", "educacion", "servicios", "ingresos", "otros"];
-const tipos = ["ingreso", "gasto"];
-
-const esquemaValidacion = Yup.object({
-  descripcion: Yup.string()
-    .min(3, "Mínimo 3 caracteres")
-    .required("Campo obligatorio"),
-  categoria: Yup.string().required("Seleccioná una categoría"),
-  tipo: Yup.string().required("Seleccioná tipo"),
-  monto: Yup.number()
-    .positive("Debe ser un número positivo")
-    .required("Campo obligatorio"),
-  fecha: Yup.date().required("Seleccioná una fecha válida"),
-});
 
 function Editar() {
   const { id } = useParams();
@@ -25,120 +9,112 @@ function Editar() {
 
   const movimiento = movimientos.find(m => m.id === parseInt(id));
 
-  const initialValues = movimiento || {
-    descripcion: "Cena con amigos",
+  const [formData, setFormData] = useState(movimiento || {
+    descripcion: "",
     categoria: "alimentacion",
     tipo: "gasto",
-    monto: 4500,
-    fecha: "2025-10-10",
+    monto: "",
+    fecha: new Date().toISOString().split("T")[0],
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const movimientoActualizado = {
+      ...formData,
+      monto: parseFloat(formData.monto),
+    };
+
+    editMovimiento(parseInt(id), movimientoActualizado);
+    navigate("/");
   };
 
   return (
-    <div className="p-6 max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4 text-center">
-        Editar {movimiento ? movimiento.descripcion : `movimiento #${id}`}
-      </h2>
+    <div className="nuevo-movimiento">
+      <h2>Editar {movimiento ? movimiento.descripcion : `movimiento #${id}`}</h2>
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={esquemaValidacion}
-        onSubmit={(valores) => {
-          editMovimiento(parseInt(id), valores);
-          navigate("/");
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form className="flex flex-col gap-3">
-            <div>
-              <label>Descripción</label>
-              <Field name="descripcion" className="border rounded p-2 w-full" />
-              <ErrorMessage
-                name="descripcion"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-            </div>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="descripcion">Descripción:</label>
+          <input
+            type="text"
+            id="descripcion"
+            name="descripcion"
+            value={formData.descripcion}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-            <div>
-              <label>Categoría</label>
-              <Field
-                as="select"
-                name="categoria"
-                className="border rounded p-2 w-full"
-              >
-                <option value="">Seleccionar</option>
-                <option value="alimentacion">Alimentación</option>
-                <option value="transporte">Transporte</option>
-                <option value="entretenimiento">Entretenimiento</option>
-                <option value="salud">Salud</option>
-                <option value="educacion">Educación</option>
-                <option value="servicios">Servicios</option>
-                <option value="ingresos">Ingresos</option>
-                <option value="otros">Otros</option>
-              </Field>
-              <ErrorMessage
-                name="categoria"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-            </div>
+        <div className="form-group">
+          <label htmlFor="tipo">Tipo:</label>
+          <select
+            id="tipo"
+            name="tipo"
+            value={formData.tipo}
+            onChange={handleChange}
+          >
+            <option value="gasto">Gasto</option>
+            <option value="ingreso">Ingreso</option>
+          </select>
+        </div>
 
-            <div>
-              <label>Tipo</label>
-              <Field
-                as="select"
-                name="tipo"
-                className="border rounded p-2 w-full"
-              >
-                <option value="">Seleccionar</option>
-                <option value="ingreso">Ingreso</option>
-                <option value="gasto">Gasto</option>
-              </Field>
-              <ErrorMessage
-                name="tipo"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-            </div>
+        <div className="form-group">
+          <label htmlFor="categoria">Categoría:</label>
+          <select
+            id="categoria"
+            name="categoria"
+            value={formData.categoria}
+            onChange={handleChange}
+          >
+            <option value="alimentacion">Alimentación</option>
+            <option value="transporte">Transporte</option>
+            <option value="entretenimiento">Entretenimiento</option>
+            <option value="salud">Salud</option>
+            <option value="educacion">Educación</option>
+            <option value="servicios">Servicios</option>
+            <option value="ingresos">Ingresos</option>
+            <option value="otros">Otros</option>
+          </select>
+        </div>
 
-            <div>
-              <label>Monto</label>
-              <Field
-                name="monto"
-                type="number"
-                className="border rounded p-2 w-full"
-              />
-              <ErrorMessage
-                name="monto"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-            </div>
+        <div className="form-group">
+          <label htmlFor="monto">Monto:</label>
+          <input
+            type="number"
+            id="monto"
+            name="monto"
+            value={formData.monto}
+            onChange={handleChange}
+            step="0.01"
+            required
+          />
+        </div>
 
-            <div>
-              <label>Fecha</label>
-              <Field
-                name="fecha"
-                type="date"
-                className="border rounded p-2 w-full"
-              />
-              <ErrorMessage
-                name="fecha"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-            </div>
+        <div className="form-group">
+          <label htmlFor="fecha">Fecha:</label>
+          <input
+            type="date"
+            id="fecha"
+            name="fecha"
+            value={formData.fecha}
+            onChange={handleChange}
+            required
+          />
+        </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="bg-green-600 text-white rounded p-2 mt-2 hover:bg-green-700"
-            >
-              Guardar cambios
-            </button>
-          </Form>
-        )}
-      </Formik>
+        <div className="form-actions">
+          <button type="submit" className="btn-primary">Guardar cambios</button>
+          <button type="button" className="btn-secondary" onClick={() => navigate("/")}>
+            Cancelar
+          </button>
+        </div>
+      </form>
     </div>
   );
 }
