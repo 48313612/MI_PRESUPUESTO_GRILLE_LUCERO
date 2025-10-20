@@ -1,6 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { useMovimientosContext } from "../contexts/MovimientosContext";
 
 const categorias = [ "Alimentación", "Transporte", "Entretenimiento", "Salud", "Educación", "Servicios", "Ingresos", "Otros",];
 const tipos = ["Gasto", "Ingreso"];
@@ -14,11 +15,14 @@ const esquemaValidacion = Yup.object({
   monto: Yup.number()
     .positive("Debe ser un número positivo")
     .required("Campo obligatorio"),
-  fecha: Yup.date().required("Seleccioná una fecha válida"),
+  fecha: Yup.date()
+    .max(new Date(), "La fecha no puede ser futura")
+    .required("Seleccioná una fecha válida"),
 });
 
 function Nuevo() {
   const navigate = useNavigate();
+  const { addMovimiento } = useMovimientosContext();
 
   return (
     <div className="nuevo-movimiento">
@@ -36,8 +40,16 @@ function Nuevo() {
         }}
         validationSchema={esquemaValidacion}
         onSubmit={(values, { resetForm }) => {
-          console.log("Nuevo movimiento:", values);
-          alert("Movimiento agregado (simulado)");
+          const movimiento = {
+            id: Date.now(),
+            descripcion: values.descripcion.trim(),
+            categoria: String(values.categoria).toLowerCase(),
+            tipo: String(values.tipo).toLowerCase(),
+            monto: Number(values.monto),
+            fecha: values.fecha,
+          };
+
+          addMovimiento(movimiento);
           resetForm();
           navigate("/");
         }}
