@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { useMovimientosContext } from "../contexts/MovimientosContext";
+import GraficoGastoPorCategoria from "../components/GraficoGastoPorCategoria";
 
 function Resumen() {
   const { movimientos } = useMovimientosContext();
@@ -8,13 +9,12 @@ function Resumen() {
     const ingresos = movimientos
       .filter((m) => m.tipo === "ingreso")
       .reduce((sum, m) => sum + m.monto, 0);
-    
+
     const gastos = movimientos
       .filter((m) => m.tipo === "gasto")
       .reduce((sum, m) => sum + m.monto, 0);
-    
-    const balance = ingresos - gastos;
 
+    const balance = ingresos - gastos;
     return { ingresos, gastos, balance };
   }, [movimientos]);
 
@@ -25,10 +25,9 @@ function Resumen() {
         acc[m.categoria] = (acc[m.categoria] || 0) + m.monto;
         return acc;
       }, {});
-
     return Object.entries(gastosPorCategoria)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, 5);
+      .map(([categoria, monto]) => ({ categoria, monto }))
+      .sort((a, b) => b.monto - a.monto);
   }, [movimientos]);
 
   return (
@@ -46,7 +45,11 @@ function Resumen() {
           <p className="amount">${stats.gastos.toFixed(2)}</p>
         </div>
 
-        <div className={`stat-card balance ${stats.balance >= 0 ? "positivo" : "negativo"}`}>
+        <div
+          className={`stat-card balance ${
+            stats.balance >= 0 ? "positivo" : "negativo"
+          }`}
+        >
           <h3>Balance</h3>
           <p className="amount">${stats.balance.toFixed(2)}</p>
         </div>
@@ -57,14 +60,18 @@ function Resumen() {
         {categoriasMasGastadas.length === 0 ? (
           <p>No hay gastos registrados.</p>
         ) : (
-          <ul className="categorias-list">
-            {categoriasMasGastadas.map(([categoria, monto]) => (
-              <li key={categoria}>
-                <span className="categoria-name">{categoria}</span>
-                <span className="categoria-monto">${monto.toFixed(2)}</span>
-              </li>
-            ))}
-          </ul>
+          <>
+            <ul className="categorias-list">
+              {categoriasMasGastadas.map(({ categoria, monto }) => (
+                <li key={categoria}>
+                  <span className="categoria-name">{categoria}</span>
+                  <span className="categoria-monto">${monto.toFixed(2)}</span>
+                </li>
+              ))}
+            </ul>
+
+            <GraficoGastoPorCategoria data={categoriasMasGastadas} />
+          </>
         )}
       </div>
 
@@ -74,12 +81,15 @@ function Resumen() {
           <p>No hay movimientos registrados.</p>
         ) : (
           <ul className="movimientos-list">
-            {movimientos.slice(-5).reverse().map((mov) => (
-              <li key={mov.id} className={mov.tipo}>
-                <span>{mov.descripcion}</span>
-                <span className="monto">${mov.monto}</span>
-              </li>
-            ))}
+            {movimientos
+              .slice(-5)
+              .reverse()
+              .map((mov) => (
+                <li key={mov.id} className={mov.tipo}>
+                  <span>{mov.descripcion}</span>
+                  <span className="monto">${mov.monto}</span>
+                </li>
+              ))}
           </ul>
         )}
       </div>
