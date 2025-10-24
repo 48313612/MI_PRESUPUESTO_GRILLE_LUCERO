@@ -612,61 +612,229 @@
     }
     
     /* Mejoras de responsividad */
+    @media (max-width: 1024px) {
+      .stats-container {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .grafico-circular {
+        max-width: 100%;
+        padding: 20px;
+      }
+
+      .evolucion-section {
+        padding: 20px;
+      }
+    }
+
     @media (max-width: 768px) {
       .cards-container {
         grid-template-columns: 1fr;
         padding: 20px;
         gap: 20px;
       }
-      
+
+      .stats-container {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
       .filtros {
         flex-direction: column;
         align-items: stretch;
         padding: 12px 15px;
         margin: 10px auto;
       }
-      
+
       .filtros input,
       .filtros select {
         min-width: auto;
         width: 100%;
         margin-bottom: 8px;
       }
-      
+
       .nav {
         flex-wrap: wrap;
         padding: 10px;
+        justify-content: center;
       }
-      
+
       .nav a {
         padding: 6px 12px;
         font-size: 0.9em;
+        flex: 1;
+        text-align: center;
+        min-width: 80px;
       }
-      
+
+      .toggle {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+      }
+
       h1 {
         font-size: 2.2em;
+        margin: 15px 0;
       }
-      
+
       h2 {
         font-size: 1.8em;
+        margin: 12px 0;
+      }
+
+      .resumen {
+        padding: 20px 15px;
+        margin: 20px 10px;
+      }
+
+      .nuevo-movimiento {
+        padding: 20px 15px;
+        margin: 20px 10px;
+      }
+
+      .form-actions {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .form-actions button {
+        width: 100%;
+      }
+
+      .card-buttons {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .card-buttons button {
+        width: 100%;
+      }
+
+      .categorias-section,
+      .movimientos-recientes {
+        margin-top: 25px;
+      }
+
+      .categorias-list li,
+      .movimientos-list li {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+
+      .categoria-monto,
+      .monto {
+        align-self: flex-end;
+        font-weight: bold;
+      }
+
+      .grafico-circular {
+        padding: 15px;
+        margin: 20px 0;
+      }
+
+      .evolucion-section {
+        padding: 15px;
+        overflow-x: auto;
+      }
+
+      .ajustes {
+        padding: 20px 15px;
+        margin: 20px 10px;
+      }
+
+      .ajustes-section {
+        gap: 20px;
       }
     }
-    
+
     @media (max-width: 480px) {
       .card {
         padding: 16px;
       }
-      
+
       .nuevo-movimiento,
       .resumen {
-        padding: 20px;
-        margin: 20px 10px;
+        padding: 15px 10px;
+        margin: 15px 5px;
       }
-      
+
       .btn-primary,
       .btn-secondary,
       .btn-danger {
-        padding: 10px 16px;
-        font-size: 0.9em;
+        padding: 12px 16px;
+        font-size: 0.95em;
+      }
+
+      .stat-card {
+        padding: 20px;
+      }
+
+      .stat-card .amount {
+        font-size: 1.8em;
+      }
+
+      .nav {
+        padding: 8px 5px;
+      }
+
+      .nav a {
+        padding: 8px 10px;
+        font-size: 0.85em;
+      }
+
+      h1 {
+        font-size: 1.8em;
+      }
+
+      h2 {
+        font-size: 1.5em;
+      }
+
+      .form-group input,
+      .form-group select {
+        padding: 12px 14px;
+        font-size: 16px; /* Previene zoom en iOS */
+      }
+
+      .filtros input,
+      .filtros select {
+        padding: 12px 14px;
+        font-size: 16px;
+      }
+
+      .grafico-circular {
+        padding: 10px;
+      }
+
+      .categorias-list li,
+      .movimientos-list li {
+        padding: 12px 8px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .nav a {
+        padding: 6px 8px;
+        font-size: 0.8em;
+        min-width: 70px;
+      }
+
+      .stat-card {
+        padding: 15px;
+      }
+
+      .stat-card .amount {
+        font-size: 1.5em;
+      }
+
+      .card {
+        padding: 12px;
+      }
+
+      .card h3 {
+        font-size: 1.1em;
       }
     }
