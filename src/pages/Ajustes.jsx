@@ -5,7 +5,15 @@ function Ajustes() {
   const { dark, setDark } = useContext(ThemeContext);
 
   const handleLimpiarDatos = () => {
-    //hacer funcion de limpiar datos
+    const confirmar = window.confirm(
+      "¿Estás seguro de que querés borrar todos los movimientos y restablecer la app?"
+    );
+    if (!confirmar) return;
+
+    localStorage.removeItem("movimientos");
+
+    alert("Datos eliminados correctamente. La aplicación se reiniciará.");
+    window.location.reload();
   };
 
   return (
