@@ -26,6 +26,30 @@ const MOCK_MOVIMIENTOS = [
     monto: 2000,
     fecha: "2025-10-07",
   },
+  {
+    id: 4,
+    descripcion: "Cine",
+    categoria: "entretenimiento",
+    tipo: "gasto",
+    monto: 1000,
+    fecha: "2025-10-08",
+  },
+  {
+    id: 5,
+    descripcion: "Venta de articulos",
+    categoria: "ingresos",
+    tipo: "ingreso",
+    monto: 10000,
+    fecha: "2025-10-06",
+  },
+  {
+    id: 6,
+    descripcion: "Farmacia",
+    categoria: "salud",
+    tipo: "gasto",
+    monto: 800,
+    fecha: "2025-10-09",
+  },
 ]
 
 export function useMovimientos() {

@@ -1,6 +1,8 @@
 import React, { useMemo } from "react";
 import { useMovimientosContext } from "../contexts/MovimientosContext";
 import GraficoGastoPorCategoria from "../components/GraficoGastoPorCategoria";
+import GraficoEvolucionMensual from "../components/GraficoEvolucionMensual";
+
 
 function Resumen() {
   const { movimientos } = useMovimientosContext();
@@ -72,6 +74,14 @@ function Resumen() {
 
             <GraficoGastoPorCategoria data={categoriasMasGastadas} />
           </>
+        )}
+      </div>
+
+      <div className="evolucion-section">
+        {movimientos.length === 0 ? (
+          <p>No hay movimientos para mostrar.</p>
+        ) : (
+            <GraficoEvolucionMensual />
         )}
       </div>
 
