@@ -1,16 +1,18 @@
 import React from "react";
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
-function GraficoGastoPorCategoria() {
-  //reemplazar data por movimientos reales
-  const data = [
-    { nombre: "Comida", valor: 4500 },
-    { nombre: "Transporte", valor: 2000 },
-    { nombre: "Ocio", valor: 1500 },
-    { nombre: "Salud", valor: 800 },
-  ];
+function GraficoGastoPorCategoria({ data }) {
+  if (!data || data.length === 0) {
+    return <p className="text-center">No hay datos para mostrar.</p>;
+  }
 
-  const COLORS = ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50"];
+  const COLORS = ["#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#9C27B0", "#FF9800"];
 
   return (
     <div className="grafico-circular p-6 max-w-md mx-auto">
@@ -26,9 +28,10 @@ function GraficoGastoPorCategoria() {
             cy="50%"
             outerRadius={100}
             fill="#8884d8"
-            dataKey="valor"
-            label={({ nombre, percent }) =>
-              `${nombre}: ${(percent * 100).toFixed(0)}%`
+            dataKey="monto"
+            nameKey="categoria"
+            label={({ categoria, percent }) =>
+              `${categoria}: ${(percent * 100).toFixed(0)}%`
             }
           >
             {data.map((entry, index) => (
@@ -38,8 +41,9 @@ function GraficoGastoPorCategoria() {
               />
             ))}
           </Pie>
-          <Tooltip formatter={(valor) => `$${valor}`} />
-          <Legend />
+          <Tooltip
+            formatter={(valor, name, entry) => [`$${valor}`, entry.payload.categoria]}
+          />
         </PieChart>
       </ResponsiveContainer>
     </div>
