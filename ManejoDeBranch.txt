@@ -1,4 +1,4 @@
-BRANCH
+BRANCHES
 
 Creación de Branch:
 git checkout -b nombreBranch
