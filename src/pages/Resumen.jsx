@@ -84,25 +84,6 @@ function Resumen() {
             <GraficoEvolucionMensual />
         )}
       </div>
-
-      <div className="movimientos-recientes">
-        <h3>Últimos Movimientos</h3>
-        {movimientos.length === 0 ? (
-          <p>No hay movimientos registrados.</p>
-        ) : (
-          <ul className="movimientos-list">
-            {movimientos
-              .slice(-5)
-              .reverse()
-              .map((mov) => (
-                <li key={mov.id} className={mov.tipo}>
-                  <span>{mov.descripcion}</span>
-                  <span className="monto">${mov.monto}</span>
-                </li>
-              ))}
-          </ul>
-        )}
-      </div>
     </div>
   );
 }
