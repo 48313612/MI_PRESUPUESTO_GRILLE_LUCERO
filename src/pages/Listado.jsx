@@ -13,8 +13,8 @@ function Listado() {
   const [fechaHasta, setFechaHasta] = useState("");
   const [montoMin, setMontoMin] = useState("");
   const [montoMax, setMontoMax] = useState("");
-  const [sortField, setSortField] = useState(""); // "fecha" | "monto"
-  const [sortDir, setSortDir] = useState("desc"); // "asc" | "desc"
+  const [sortField, setSortField] = useState("");
+  const [sortDir, setSortDir] = useState("desc");
 
   const categorias = useMemo(() => {
     const set = new Set(movimientos.map(m => m.categoria));
@@ -77,94 +77,100 @@ function Listado() {
     <div className="listado-movimientos">
       <h2>Mis Movimientos</h2>
 
-      <div className="filtros">
-        <div className="filtro-item">
-          <label htmlFor="buscar">Buscar por descripción</label>
-          <input
-            id="buscar"
-            type="text"
-            placeholder="Ej: supermercado"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
+      <div className="filtros-container">
+        <div className="filtros-header">
+          <h3>Filtros y Búsqueda</h3>
         </div>
 
-        <div className="filtro-item">
-          <label htmlFor="tipo">Tipo</label>
-          <select id="tipo" value={filterTipo} onChange={(e) => setFilterTipo(e.target.value)}>
-            <option value="">Todos</option>
-            <option value="gasto">Gasto</option>
-            <option value="ingreso">Ingreso</option>
-          </select>
-        </div>
-
-        <div className="filtro-item">
-          <label htmlFor="categoria">Categoría</label>
-          <select id="categoria" value={filterCategoria} onChange={(e) => setFilterCategoria(e.target.value)}>
-            <option value="">Todas</option>
-            {categorias.map(cat => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </select>
-        </div>
-
-        <div className="filtro-item">
-          <label>Fecha (desde/hasta)</label>
-          <div className="filtro-rango">
+        <div className="filtros-grid">
+          <div className="filtro-group">
+            <label htmlFor="buscar">Buscar por descripción</label>
             <input
-              aria-label="Fecha desde"
-              type="date"
-              value={fechaDesde}
-              onChange={(e) => setFechaDesde(e.target.value)}
-            />
-            <input
-              aria-label="Fecha hasta"
-              type="date"
-              value={fechaHasta}
-              onChange={(e) => setFechaHasta(e.target.value)}
+              id="buscar"
+              type="text"
+              placeholder="Ej: supermercado"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
             />
           </div>
-        </div>
 
-        <div className="filtro-item">
-          <label>Monto (mín/máx)</label>
-          <div className="filtro-rango">
-            <input
-              aria-label="Monto mínimo"
-              type="number"
-              inputMode="decimal"
-              step="0.01"
-              value={montoMin}
-              onChange={(e) => setMontoMin(e.target.value)}
-            />
-            <input
-              aria-label="Monto máximo"
-              type="number"
-              inputMode="decimal"
-              step="0.01"
-              value={montoMax}
-              onChange={(e) => setMontoMax(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className="filtro-item">
-          <label htmlFor="ordenar">Ordenar por</label>
-          <div className="filtro-orden">
-            <select id="ordenar" value={sortField} onChange={(e) => setSortField(e.target.value)}>
-              <option value="">Sin orden</option>
-              <option value="fecha">Fecha</option>
-              <option value="monto">Monto</option>
-            </select>
-            <select aria-label="Dirección de orden" value={sortDir} onChange={(e) => setSortDir(e.target.value)}>
-              <option value="asc">Asc</option>
-              <option value="desc">Desc</option>
+          <div className="filtro-group">
+            <label htmlFor="tipo">Tipo</label>
+            <select id="tipo" value={filterTipo} onChange={(e) => setFilterTipo(e.target.value)}>
+              <option value="">Todos</option>
+              <option value="gasto">Gasto</option>
+              <option value="ingreso">Ingreso</option>
             </select>
           </div>
+
+          <div className="filtro-group">
+            <label htmlFor="categoria">Categoría</label>
+            <select id="categoria" value={filterCategoria} onChange={(e) => setFilterCategoria(e.target.value)}>
+              <option value="">Todas</option>
+              {categorias.map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="filtro-group">
+            <label>Fecha (desde/hasta)</label>
+            <div className="filtro-rango">
+              <input
+                aria-label="Fecha desde"
+                type="date"
+                value={fechaDesde}
+                onChange={(e) => setFechaDesde(e.target.value)}
+              />
+              <input
+                aria-label="Fecha hasta"
+                type="date"
+                value={fechaHasta}
+                onChange={(e) => setFechaHasta(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="filtro-group">
+            <label>Monto (mín/máx)</label>
+            <div className="filtro-rango">
+              <input
+                aria-label="Monto mínimo"
+                type="number"
+                inputMode="decimal"
+                step="0.01"
+                value={montoMin}
+                onChange={(e) => setMontoMin(e.target.value)}
+              />
+              <input
+                aria-label="Monto máximo"
+                type="number"
+                inputMode="decimal"
+                step="0.01"
+                value={montoMax}
+                onChange={(e) => setMontoMax(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="filtro-group">
+            <label htmlFor="ordenar">Ordenar por</label>
+            <div className="filtro-orden">
+              <select id="ordenar" value={sortField} onChange={(e) => setSortField(e.target.value)}>
+                <option value="">Sin orden</option>
+                <option value="fecha">Fecha</option>
+                <option value="monto">Monto</option>
+              </select>
+              <select aria-label="Dirección de orden" value={sortDir} onChange={(e) => setSortDir(e.target.value)}>
+                <option value="asc">Asc</option>
+                <option value="desc">Desc</option>
+              </select>
+            </div>
+          </div>
         </div>
 
-        <div className="filtro-item">
-          <button type="button" onClick={limpiarFiltros}>Limpiar filtros</button>
+        <div className="filtros-actions">
+          <button type="button" onClick={limpiarFiltros} className="btn-limpiar">Limpiar filtros</button>
         </div>
       </div>
 
