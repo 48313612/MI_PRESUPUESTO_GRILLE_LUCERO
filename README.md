@@ -61,15 +61,17 @@ Antes que nada la instalacion de Node.js
 ### EXPLICACION Y MUESTRA DE PANTALLAS 
 
 ### Pantalla Principal (Resumen)
-    //ADJUNTAR FOTO /RESUMEN
+    (![RESUMEN/](src/assets/captura-resumen.png))
+    ![RESUMEN/](src/assets/captura-resumen2.png)
+    ![RESUMEN/](src/assets/captura-resumen3.png)
     Vista del dashboard con estadísticas y gráfico de evolución.
 
 ### Lista de Movimientos
-    //ADJUNTAR FOTO /LISTADO
+    ![INCIO/](src/assets/captura-inicio.png)
     Página de listado con filtros por nombre del movimiento, categoria y tipo.
 
 ### Formulario de Nuevo Movimiento
-    //ADJUNTAR FOTO /NUEVO
+    ![NUEVO/](src/assets/captura-nuevo.png)
     Proceso de cargar un nuevo movimiento al listado.
 
 
