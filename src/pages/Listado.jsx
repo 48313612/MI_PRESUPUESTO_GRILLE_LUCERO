@@ -133,7 +133,7 @@ function Listado() {
 
           <div className="filtro-group">
             <label>Monto (mín/máx)</label>
-            <div className="filtro-rango">
+            <div className="filtro-rango filtro-monto">
               <input
                 aria-label="Monto mínimo"
                 type="number"

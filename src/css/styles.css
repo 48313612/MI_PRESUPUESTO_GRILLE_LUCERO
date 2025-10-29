@@ -617,6 +617,11 @@
       flex: 1;
     }
 
+    .filtro-monto input {
+      width: 155px;
+      flex: none;
+    }
+
     .filtro-orden {
       display: flex;
       gap: 10px;
