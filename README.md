@@ -74,6 +74,10 @@ Antes que nada la instalacion de Node.js
     ![NUEVO/](./src/assets/captura-nuevo.png)
     Proceso de cargar un nuevo movimiento al listado.
 
+### Formulario de Nuevo Movimiento
+    ![AJUSTES/](./src/assets/captura-ajustes.png)
+    Página destinada a modificar la apariencia y/o datos.
+    
 
 ## LINK A DEPLOY
     https://mi-presupuesto-grille-lucero.vercel.app/
