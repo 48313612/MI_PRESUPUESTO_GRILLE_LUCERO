@@ -130,8 +130,9 @@
     }
     
     .card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      background: rgba(14, 165, 233, 0.05);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     
     .card.gasto {
@@ -370,12 +371,14 @@
     }
     
     .categorias-section,
-    .movimientos-recientes {
+    .movimientos-recientes,
+    .ultimos-movimientos-section {
       margin-top: 30px;
     }
     
     .categorias-section h3,
-    .movimientos-recientes h3 {
+    .movimientos-recientes h3,
+    .ultimos-movimientos-section h3 {
       color: #0c4a6e;
       margin-bottom: 15px;
       text-align: left;
@@ -391,13 +394,20 @@
     .movimientos-list li {
       display: flex;
       justify-content: space-between;
-      padding: 10px;
-      border-bottom: 1px solid #eee;
+      padding: 12px 16px;
+      border-bottom: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
     }
     
     .categorias-list li:hover,
     .movimientos-list li:hover {
-      background-color: #f9f9f9;
+      background: rgba(14, 165, 233, 0.05);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
     
     .categoria-name {
@@ -416,7 +426,11 @@
     .movimientos-list li.ingreso .monto {
       color: #059669;
     }
-    
+
+    .evolucion-section {
+      margin-top: 30px;
+    }
+
     .ajustes-section {
       margin-bottom: 30px;
       padding-bottom: 20px;
@@ -782,7 +796,8 @@
       }
 
       .categorias-section,
-      .movimientos-recientes {
+      .movimientos-recientes,
+      .ultimos-movimientos-section {
         margin-top: 25px;
       }
 

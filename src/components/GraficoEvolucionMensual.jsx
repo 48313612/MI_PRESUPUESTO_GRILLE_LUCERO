@@ -35,17 +35,9 @@ export default function GraficoEvolucionMensual() {
     return datos;
   }, [movimientos]);
 
-  const ultimosMovimientos = useMemo(() => {
-    return [...movimientos]
-      .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
-      .slice(0, 5);
-  }, [movimientos]);
-
   return (
-    <div className="grafico-evolucion p-6 max-w-3xl mx-auto bg-white rounded-2xl shadow-md">
-      <h2 className="text-3xl font-bold mb-6 text-center text-[#003366]">
-        Evolución Mensual
-      </h2>
+    <div className="grafico-evolucion">
+      <h2>Evolución Mensual</h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
           data={data}
@@ -63,36 +55,6 @@ export default function GraficoEvolucionMensual() {
           <Bar dataKey="ingresos" fill="#00C49F" name="ingresos" />
         </BarChart>
       </ResponsiveContainer>
-
-      <div className="mt-10">
-        <h3 className="text-xl font-bold text-[#003366] mb-4">
-          Últimos Movimientos
-        </h3>
-
-        <ul className="divide-y divide-gray-200">
-          {ultimosMovimientos.length === 0 ? (
-            <p className="text-gray-500">No hay movimientos registrados.</p>
-          ) : (
-            ultimosMovimientos.map((mov) => (
-              <li
-                key={mov.id}
-                className="flex justify-between items-center py-2"
-              >
-                <span className="font-semibold text-[#003366]">
-                  {mov.descripcion}
-                </span>
-                <span
-                  className={`font-bold ${
-                    mov.tipo === "gasto" ? "text-red-500" : "text-green-500"
-                  }`}
-                >
-                  ${Number(mov.monto).toLocaleString("es-AR")}
-                </span>
-              </li>
-            ))
-          )}
-        </ul>
-      </div>
     </div>
   );
 }

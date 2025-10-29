@@ -3,7 +3,6 @@ import { useMovimientosContext } from "../contexts/MovimientosContext";
 import GraficoGastoPorCategoria from "../components/GraficoGastoPorCategoria";
 import GraficoEvolucionMensual from "../components/GraficoEvolucionMensual";
 
-
 function Resumen() {
   const { movimientos } = useMovimientosContext();
 
@@ -31,6 +30,7 @@ function Resumen() {
       .map(([categoria, monto]) => ({ categoria, monto }))
       .sort((a, b) => b.monto - a.monto);
   }, [movimientos]);
+
 
   return (
     <div className="resumen">
@@ -84,6 +84,26 @@ function Resumen() {
             <GraficoEvolucionMensual />
         )}
       </div>
+
+      <div className="ultimos-movimientos-section">
+        <h3>Últimos Movimientos</h3>
+        {movimientos.length === 0 ? (
+          <p>No hay movimientos registrados.</p>
+        ) : (
+          <ul className="movimientos-list">
+            {movimientos
+              .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+              .slice(0, 5)
+              .map((mov) => (
+                <li key={mov.id} className={mov.tipo}>
+                  <span className="descripcion">{mov.descripcion}</span>
+                  <span className="monto">${Number(mov.monto).toFixed(2)}</span>
+                </li>
+              ))}
+          </ul>
+        )}
+      </div>
+
     </div>
   );
 }
